@@ -1,9 +1,9 @@
 package http
 
 import (
-	j "../"
 	"bytes"
 	"encoding/json"
+	j "github.com/mokelab-go/jsonclient"
 	"io"
 	"net/http"
 )

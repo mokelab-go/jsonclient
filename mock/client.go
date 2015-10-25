@@ -1,7 +1,7 @@
 package mock
 
 import (
-	j "../"
+	j "github.com/mokelab-go/jsonclient"
 )
 
 type MockClient struct {
