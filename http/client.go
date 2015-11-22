@@ -53,15 +53,24 @@ func (c *client) Send(body map[string]interface{}) (j.Response, error) {
 	if err != nil {
 		return j.Response{}, err
 	}
+	// read headers
+	headers := make(map[string]string)
+	for key, _ := range resp.Header {
+		headers[key] = resp.Header.Get(key)
+	}
+	// 204 handling
+	if resp.StatusCode == 204 {
+		return j.Response{
+			Status:  204,
+			Headers: headers,
+			Body:    nil,
+		}, nil
+	}
 	doc := json.NewDecoder(resp.Body)
 	var obj map[string]interface{}
 	err = doc.Decode(&obj)
 	if err != nil {
 		return j.Response{}, err
-	}
-	headers := make(map[string]string)
-	for key, _ := range resp.Header {
-		headers[key] = resp.Header.Get(key)
 	}
 	return j.Response{
 		Status:  resp.StatusCode,
